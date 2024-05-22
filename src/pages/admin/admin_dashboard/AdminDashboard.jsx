@@ -1,6 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const AdminDashboard = () => {
+
+    //useState
+    const [productName, setproductName] = useState('')
+    const [productPrice, setproductPrice] = useState('')
+    const [productCategory, setproductCategory] = useState('')
+    const [productDescription, setproductDescription] = useState('')
+
+    //State for image
+    const [productImage, setProductImage] = useState('')
+    const [previewImage, setPreviewImage] = useState('')
+
+    //image upload handler
+    const handleImage = (event) => {
+        const file = event.target.files[0]
+        setProductImage(file)//for backend
+        setPreviewImage(URL.createObjectURL(file))
+    }
     return (
         <>
 
@@ -18,11 +35,33 @@ const AdminDashboard = () => {
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Create a new product</h1>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <form action="">
+                                        <label className='mt-2'>Product Name</label>
+                                        <input onChange={(e) => setproductName(e.target.value)} type="text" className='form-control' placeholder='Enter Product Name' />
+                                        <label className='mt-2'>Product Price</label>
+                                        <input onChange={(e) => setproductPrice(e.target.value)} type="number " className='form-control' placeholder='Enter Product Price' />
+                                        <label className='mt-2'>Choose Category</label>
+                                        <select onChange={(e) => setproductCategory(e.target.value)} className='form-control'>
+                                            <option value="plants">Plants</option>
+                                            <option value="electronics">Electronics</option>
+                                            <option value="gadgets">Gadgets</option>
+                                            <option value="furniture">Furniture</option>
+                                        </select>
+
+                                        <label className='mt-2'>Enter Description</label>
+                                        <textarea onChange={(e) => setproductDescription(e.target.value)} className='form-control'></textarea>
+                                        <label className='mt-2'> Choose Product Image</label>
+                                        <input onChange={handleImage} type="file" className='form-control' />
+
+                                        {/* {Preview Image} */}
+                                        {
+                                            previewImage && <img src={previewImage} alt="preview image" className=" img-fluid rounded mt-2"/>
+                                        }
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
